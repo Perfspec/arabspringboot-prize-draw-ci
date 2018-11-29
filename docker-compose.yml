@@ -1,0 +1,39 @@
+version: '3'
+services: 
+    activemq:
+        container_name: activemq
+        image: bobcrutchley/activemq
+    mongodb:
+        container_name: mongodb
+        image: mongo
+    node:
+        container_name: node
+        image: node
+    account-num-gen:
+        container_name: account-num-gen
+        build:
+            context: AccountNumberGen
+            args:
+            - artifact_id=AccountNumGenerator
+            - version=0.0.1-SNAPSHOT
+    prize-gen:
+        container_name: prize-gen
+        build:
+            context: SpringPrizeGen           
+            args:
+            - artifact_id=prizegeneration
+            - version=0.0.1-SNAPSHOT
+    account-api:
+        container_name: account-api
+        build:
+            context: SpringAccount 
+            args:
+            - artifact_id=account-api
+            - version=0.0.1-SNAPSHOT
+    consumer:
+        container_name: consumer 
+        build:
+            context: JMSConsumerAccountAPI 
+            args:
+            - artifact_id=JMSConsumer
+            - version=0.0.1-SNAPSHOT
